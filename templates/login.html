@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+
+<div
+  class="container border border-2 p-5 shadow mb-5 bg-body-tertiary rounded w-25 mt-5"
+>
+  <h1 class="text-center">Login</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- Username (crispy render OK) -->
+    {{ form.username|as_crispy_field }}
+
+    <!-- Password with Eye Icon -->
+    <div class="mb-3">
+      <div style="position: relative">
+        {{ form.password|as_crispy_field }}
+
+        <!-- Eye icon -->
+        <i
+          class="fa fa-eye"
+          id="togglePassword"
+          style="position: absolute; right: 15px; top: 38px; cursor: pointer"></i>
+      </div>
+    </div>
+
+    <input type="submit" value="Login" class="btn btn-primary w-100 mt-3" />
+  </form>
+</div>
+
+<!-- Font Awesome for Eye Icon -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<!-- Show/Hide password JS -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("togglePassword");
+    const password = document.getElementById("password-field");
+
+    toggle.onclick = function () {
+      if (password.type === "password") {
+        password.type = "text";
+        toggle.classList.remove("fa-eye");
+        toggle.classList.add("fa-eye-slash");
+      } else {
+        password.type = "password";
+        toggle.classList.remove("fa-eye-slash");
+        toggle.classList.add("fa-eye");
+      }
+    };
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block shib %}
+
+
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>PRODUCT</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'shop:shop' %}">Home</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock  %}
+
+{% block content %}
+<div class="container border border-2 p-5 shadow ui-widget-shadow mt-5 mb-5">
+
+
+<h2 class="tex-center">You have searched for <span>{{query}}</span></h2>
+    {% for get in result %}
+        <div class="about-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img class="img-fluid" src="{{ get.image.url }}" alt="">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="noo-sh-title-top">{{ get.name }}</h2>
+                    <p>{{ get.descriptions }}</p>
+                    <h3 class="text-success mt-3">₹ {{ get.price }}</h3>
+                    {% if user.is_superuser %}
+                    <a class="btn hvr-hover mt-4" href="{% url 'shop:add-stock' get.id%}">Add stock</a>
+                    {% else %}
+                    {% if get.stock > 0 %}
+                        <a class="btn hvr-hover mt-4">Add to cart</a>
+                    {% else %}
+                    <h3 class=" mt-4 text-danger"><b>out of stock</b></h3>
+                        <a ></a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <h1>No product found</h1>
+    {% endfor %}
+</div>
+
+{% endblock content %}

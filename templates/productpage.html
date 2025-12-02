@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<style>
+    .product-img {
+        width: 70%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .category-header-img {
+        display: block;
+        margin: 0 auto;
+        width: 60%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+</style>
+
+<div class="container mt-4">
+    <img class="category-header-img" src="{{ category.image.url }}" alt="">
+
+</div>
+
+<div class="container text-center mt-3">
+    <h1><b>{{ category.name }}</b></h1>
+    <h3 class="text-muted">{{ category.description }}</h3>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        {% for i in category.category.all  %}
+        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-4">
+            <div class="products-single fix">
+                <div class="box-img-hover">
+                    <div class="type-lb">
+                        <p class="new">New</p>
+                    </div>
+
+                    <img src="{{ i.image.url }}" class="img-fluid product-img" alt="Image">
+
+                    <div class="mask-icon">
+                        <ul>
+                            <li><a href="#"><i class="fas fa-eye"></i></a></li>
+                            <li><a href="#"><i class="fas fa-sync-alt"></i></a></li>
+                            <li><a href="#"><i class="far fa-heart"></i></a></li>
+                        </ul>
+                        <a class="cart" href="{% url 'shop:get-product' i.id%}">details</a>
+                    </div>
+                </div>
+
+                <div class="why-text text-center">
+                    <h4>{{ i.name }}</h4>
+                    <h5>₹ {{ i.price }}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
