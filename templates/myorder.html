@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My order</h1>
+    
+    {% for i in orders %}
+    <div class="container border border-1 p-5 shadow p-3 mb-5 bg-body-tertiary rounded mt-3">
+        <h1><b>order id :</b>{{i.order_id}}</h1>
+       <h1>Ordered on :{{i.ordered_date}}</h1>
+       <h1>Order Total:{{i.amount}}</h1>
+       <h1>Status :{{i.delivery_status}}</h1>
+       {% for j in i.products.all %}
+       
+       <div class="container border border-1 p-5">
+        <div class="row">
+            <div class="col">
+                <img src="{{j.product.image.url}}" alt="" class="h-100 w-50">
+            </div>
+            <div class="col">
+                <h1>Name :{{j.product.name}}</h1>
+                <br>
+                <br>
+                <h1>Price :{{j.product.price}}</h1>
+                <h1>QTY:{{j.quantity}}</h1>
+                
+
+            </div>
+        </div>
+
+       </div>
+        
+       {% endfor %}
+        
+        </div>
+    {% endfor %}
+    
+    
+        
+    
+        
+{% endblock content %}
+    

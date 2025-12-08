@@ -4,6 +4,21 @@ from .models import Category_model,Product_model
 from .forms import Signup_form,Login_form,Category_form,Product_form,Add_stock_form
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+
+
+
+
+
+def admin_required(fun):
+    def wrapper(request):
+        if not request.user.is_superuser:
+            return HttpResponse('not allowed')
+        else:
+            return fun(request)
+    return wrapper
 
 class catagorie(View):
     def get(self,request):
@@ -74,7 +89,8 @@ class Logout(View):
         logout(request)
         return redirect('shop:login')
 
-
+@method_decorator(admin_required,name="dispatch")
+@method_decorator(login_required,name="dispatch")
 class Add_categories(View):
     def get(self,request):
         form=Category_form()
@@ -85,7 +101,9 @@ class Add_categories(View):
             form.save()
         return redirect('shop:add-categories')
     
-    
+
+@method_decorator(admin_required,name="dispatch")
+@method_decorator(login_required,name="dispatch")
 class Add_product(View):
     def get(self,request):
         form=Product_form()
@@ -96,8 +114,9 @@ class Add_product(View):
             form.save()
         return redirect('shop:add-product')
     
-    
-    
+
+@method_decorator(admin_required,name="dispatch")
+@method_decorator(login_required,name="dispatch")
 class Add_stock(View):
     def get(self,request,i):
         edit=Product_model.objects.get(id=i)

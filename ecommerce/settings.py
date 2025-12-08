@@ -61,6 +61,8 @@ MIDDLEWARE = [
     
 ]
 
+
+LOGIN_URL="shop:login"
 ROOT_URLCONF = 'ecommerce.urls'
 import os
 TEMPLATES = [
