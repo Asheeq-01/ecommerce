@@ -115,7 +115,7 @@ class Add_product(View):
         return redirect('shop:add-product')
     
 
-@method_decorator(admin_required,name="dispatch")
+
 @method_decorator(login_required,name="dispatch")
 class Add_stock(View):
     def get(self,request,i):
